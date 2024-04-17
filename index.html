@@ -19,7 +19,7 @@
         .wrapper {
         height: 100vh;
         width: 100vw;
-        background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrvKfRGPB2g6chT3Vt2YBZjglu0HvWRg1CI7ZKWVlFtNHkVtMB1GmEMll_&s=10") no-repeat;
+        background: radial-gradient(circle at 50%100%,#919BFF,#133A94);
         background-size: cover;
         background-position: center center;
         position: absolute;
@@ -29,12 +29,13 @@
         overflow-y: auto;
         } 
         .title {
-            background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ1dQKCMNP5kfKxcf4dJ0bUz--YFlANSUdrA&usqp=CAU");
-            background-size: contain;
+            background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuFlib_sDHMn0rxxSAYiGJE7-_93QNtWrvLeAYN9FwNi8959Ztfd_lnfYM&s=10");
+            background-size: contain;            
             background-position: 80% 50%;
             -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
+            margin: 5vmin auto;
         }
         .nav {
           position: relative;  
@@ -116,7 +117,7 @@
             transition: max-height 1s ease-out, top 1s ease-out;
             max-height: 2rem;
             line-height: 2rem;
-            overflow: hidden;
+            overflow: hidden;           
             text-overflow: ellipsis;
             width: 70vmin;
             transform: translate(-50%, -50%);
@@ -333,8 +334,11 @@
               break;  
             }
         }
-        if(lives==0){
+        if(lives<=0){
             // actions to do when you lose.
+           for(var i=0;i<cards.length;i++){
+             flipCard(i);               
+           }
             document.getElementsByClassName('Lose')[0].style.display = "block";
           setTimeout(()=>{
               document.getElementsByClassName('Lose')[0].style.display = "none";
@@ -373,7 +377,9 @@
               flipCard(openCard[0]);
               flipCard(openCard[1]);
               openCard.splice(0,2,-1,-1);
-              lives--;
+              if(lives>0){
+                lives--;  
+              }
               document.getElementById('lives').innerText= lives;   
           }
           won();
@@ -395,10 +401,6 @@
        back.style.transform = "rotateY(180deg)";     
         }  
         
-        
-      /*
-      
-        */
   </script>
 </body>
 </html>
