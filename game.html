@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0%;
+            padding: 0%;
+            font-family: "Jersey 25", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        } 
+        .wrapper {
+        height: 100vh;
+        width: 100vw;
+        background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrvKfRGPB2g6chT3Vt2YBZjglu0HvWRg1CI7ZKWVlFtNHkVtMB1GmEMll_&s=10") no-repeat;
+        background-size: cover;
+        background-position: center center;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        } 
+        .title {
+            background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ1dQKCMNP5kfKxcf4dJ0bUz--YFlANSUdrA&usqp=CAU");
+            background-size: contain;
+            background-position: 80% 50%;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+        }
+        .nav {
+          position: relative;  
+          translate: -50% -50%;
+          top: 10%;
+          left: 50%;
+          width: 80vmin;
+          height: 10vmin;
+          background: rgba(100,100,100,0.5);
+          border-radius: 1.5vmin;
+          z-index: calc(infinity);
+          font-size: 4vmin;
+              
+          display: flex;
+          justify-content: space-evenly;
+          align-content: center;
+          padding: 3vmin 0vh;
+          
+          select {
+             padding-bottom: 1vmin; 
+             translate: 0% -15%;
+             height: 150%;
+          }
+          button {
+              height: 4vmin;
+              padding: 0vh 2vmin;
+              font-size: 3vmin;
+              
+              border: none;   
+              border-radius: 0.7vmin; 
+          }
+        }
+        .box {
+            min-height: 80vmin;
+            width: 90vmin;
+            
+            display: grid;
+            padding: 5vmin 1vmin;
+            gap: 1vmin 2vmin;
+            justify-content: center;
+            align-content: space-evenly;
+            grid-template-columns: repeat(auto-fit,18vmin);
+            position: relative;
+            translate: -50% -50%;
+            top: 40%;
+            left: 50%;
+            pointer-events: none;            
+            background: rgba(100,100,100,0.5);
+            border-radius: 3vmin;
+            backdrop-filter: blur(5px) saturate(150%);
+        }      
+        .card {
+            height: 17vmin;
+            width: 17vmin;
+            border-radius: 10px;            
+            position: relative;
+            filter: drop-shadow(0px 0px 1vmin #151515);
+                     
+            .front, .back {
+            height: 18vmin;
+            width: 18vmin;
+            border-radius: 10px;
+            position: absolute;
+            backface-visibility: hidden;
+            transition: transform 2s;
+            }
+            .back {
+                background: #6a78ff;
+                transform: rotateY(180deg);
+                background-size: contain;
+                background-position: center center;
+            }
+            .front {
+                background: #55acff;
+            }
+        }
+        .info {
+            position: relative;
+            transition: max-height 1s ease-out, top 1s ease-out;
+            max-height: 4rem;
+            line-height: 2rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 70vmin;
+            translate: -50% -50%;
+            top: 15%;
+            left: 50%;        
+            
+            ul {
+             color: white;  
+                            
+            }
+        }
+        input:checked ~ .info {
+            max-height: 50vh;
+            top: 35%;
+        }
+        .final {
+            position: fixed;
+            translate: -50% -50%;
+            top: 50%;
+            left: 50%;
+            height: 60vmin;
+            width: 80vmin;  
+            background-size: cover; 
+            background-position: center center;  
+            z-index: calc(infinity);
+            border-radius: 3vmin;
+            border: 5vmin solid;
+            border-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPPK4GI3pKDezwifQG7dJivtEYyFWqwwzow&usqp=CAU") 40 round;
+        }
+        .Win {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9whJeQWBBsup8wR45ZJ947WJ9B1hHwOSMeg&usqp=CAU'); 
+            display: none; 
+                      
+        }
+        .Lose {
+          background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8VLsvXj9gm_iO-27ZMUJlpKSDWz0CtLqdKA&usqp=CAU');  
+        display: none;  
+        }
+    </style>
+</head>
+<body>
+    
+  <div class="wrapper">
+      <h1 align="center" class="title">Flip Fusion</h1>
+      
+      <div class="nav">
+          <select id="size" onchange="getData()">
+          <option selected disabled value="0">Select size </option>          
+          <option value="4">4 x 2</option>
+          <option value="5">5 x 2</option>          
+          <option value="6">6 x 2</option>
+          <option value="8">8 x 2</option>
+      </select>
+       <div style="color: white;">Points : <span id="Points">0</span></div>  
+       <div style="color: white;">Lives remaining : <span id="lives">6</span></div>  
+       
+      </div>
+      
+      <input type="checkbox" name="open" id="open" hidden>
+  <div class="info" open>
+    <a><label style="color:#88b5b5;" for="open">Click here for the rules of the game.</label></a><br>
+    <ul>
+        <li>First, Select size of playground. You'll get some lives to play everytime.</li>
+        <li>Click on cards to reveal them.</li>
+        <li>After revealing first card, if second card matches the first one, points increase by 1. Otherwise, lives decrease and once it reaches 0, you lose.</li>
+        <li>Try making pairs and reveal all the cards to win.</li>
+        <li>More updates on difficulty of game are coming soon !</li>
+       
+    </ul> 
+  </div>
+      
+      <div class="box">
+      <div class="card" >
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+      <div class="card">
+          <div class="front">
+              
+          </div>
+          <div class="back">
+              
+          </div>
+      </div>
+  </div>
+  <div class="final Win"></div>
+  <div class="final Lose"></div>
+  </div>
+  <script>
+     
+      var names= [];
+
+      var openCard= [-1,-1];
+      
+      var filled = [];             
+      var points=0; 
+      var lives=0;     
+      var cards = document.querySelectorAll('.card');
+         async function getData() {
+         var nums= document.getElementById('size').value;         
+         document.getElementsByClassName('box')[0].innerHTML= "";         
+         for(var i=0;i<nums*2;i++){
+             document.getElementsByClassName('box')[0].insertAdjacentHTML('beforeend',"<div class='card' onclick='seeCard("+i+")'><div class='front'> </div><div class='back'> </div></div>");
+         }
+        cards = document.querySelectorAll('.card'); 
+          points= 0;
+        document.getElementById('Points').innerText= points;   
+        lives= document.getElementById('size').value*3/2;
+        document.getElementById('lives').innerText= lives;   
+         for (var i=0;i<cards.length;i++) {
+             flipCard(i);
+         }
+       var data = [];
+           data= await fetch("https://random-data-api.com/api/v2/users?size="+cards.length/2).then((response)=>{
+              return response.json();   
+             }).then((data)=>{ 
+                    
+                 return data;
+             }).catch((error) =>
+                       console.error("Unable to fetch data:", error)); 
+                       
+        names= data.first_name;
+      // check id here for data!   
+         
+    for (var i=0;i<cards.length/2;i++) {
+    var temp1= Math.floor(Math.random()*cards.length); 
+    var temp2= Math.floor(Math.random()*cards.length); 
+    
+    
+    while(filled.indexOf(temp1)>-1 || filled.indexOf(temp2)>-1 || temp1== temp2){
+  //  console.log(i+"  "+temp1+" "+temp2)
+       var temp1= Math.floor(Math.random()*cards.length); 
+    var temp2= Math.floor(Math.random()*cards.length);  
+    }
+     filled.push(temp1);
+     filled.push(temp2);
+       cards[temp1].getElementsByClassName('back')[0].style.backgroundImage= "url('https://api.dicebear.com/8.x/shapes/svg?seed="+data[i].first_name+"')";
+  cards[temp1].setAttribute('data-value',data[i].first_name);
+
+ cards[temp2].getElementsByClassName('back')[0].style.backgroundImage= "url('https://api.dicebear.com/8.x/shapes/svg?seed="+data[i].first_name+"')";
+  cards[temp2].setAttribute('data-value',data[i].first_name);      
+    }
+    
+    document.getElementsByClassName('box')[0].style.pointerEvents="auto";
+     
+             return data;                      
+                                                         
+          }      
+      //get data here or in button.     
+    
+    for (var i=0;i<cards.length;i++ ) {    
+               cards[i].setAttribute('onclick',"seeCard("+i+")");
+            
+    }
+    
+    function won(){
+        var isWon=true;
+        for(var i=0;i<cards.length;i++){
+            if (openCard.indexOf(i)<0) {
+              isWon=false;
+              break;  
+            }
+        }
+        if(lives==0){
+            // actions to do when you lose.
+            document.getElementsByClassName('Lose')[0].style.display = "block";
+          setTimeout(()=>{
+              document.getElementsByClassName('Lose')[0].style.display = "none";
+          },3000);
+        }
+        else if (isWon) {
+           // actions to do when won.
+           document.getElementsByClassName('Win')[0].style.display = "block";
+          setTimeout(()=>{
+              document.getElementsByClassName('Win')[0].style.display = "none";
+          },3000);
+        }
+    }
+          
+    function seeCard(i){    
+            
+       var front = cards[i].querySelector('.front');     
+       var back= cards[i].querySelector('.back');
+       
+       front.style.transform = "rotateY(180deg)";     
+       back.style.transform = "rotateY(0deg)";                      
+       if(openCard.indexOf(-1)==1){
+           openCard.splice(1,1);
+           openCard.splice(0,0,i);    
+           if(openCard.indexOf(-1)<0 ){
+          var open1=cards[openCard[0]].getAttribute("data-value");
+          var open2=cards[openCard[1]].getAttribute("data-value");
+          
+          if(open1==open2){
+             points++; 
+             openCard.splice(0,0,-1,-1);
+             document.getElementById('Points').innerText=points;             
+             
+          }
+          else {
+              flipCard(openCard[0]);
+              flipCard(openCard[1]);
+              openCard.splice(0,2,-1,-1);
+              lives--;
+              document.getElementById('lives').innerText= lives;   
+          }
+          won();
+       }
+       }
+       else {          
+           openCard.splice(openCard.indexOf(-1),1);
+           openCard.splice(0,0,i);           
+       }
+        }  
+        
+       function flipCard(i){    
+         
+        
+       var front = cards[i].querySelector('.front');     
+       var back= cards[i].querySelector('.back');
+       
+       front.style.transform = "rotateY(0deg)";     
+       back.style.transform = "rotateY(180deg)";     
+        }  
+        
+        
+      /*
+      function fetchJSONData() {
+
+            fetch("https://random-data-api.com/api/v2/users?response_type=json")
+
+                .then((res) => {
+
+                    if (!res.ok) {
+
+                        throw new Error
+
+                            (`HTTP error! Status: ${res.status}`);
+
+                    }
+
+                    return res.json();
+
+                })
+
+                .then((data) => 
+
+                      console.log(data.id))
+
+                .catch((error) => 
+
+                       console.error("Unable to fetch data:", error));
+
+        }
+
+        fetchJSONData();
+        */
+  </script>
+</body>
+</html>
