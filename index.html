@@ -267,6 +267,7 @@
       var lives=0;     
       var cards = document.querySelectorAll('.card');
          async function getData() {
+            filled = [];
          var nums= document.getElementById('size').value;         
          document.getElementsByClassName('box')[0].innerHTML= "";         
          for(var i=0;i<nums*2;i++){
@@ -275,7 +276,7 @@
         cards = document.querySelectorAll('.card'); 
           points= 0;
         document.getElementById('Points').innerText= points;   
-        lives= document.getElementById('size').value*3/2;
+        lives= parseInt(nums*3/2);
         document.getElementById('lives').innerText= lives;   
          for (var i=0;i<cards.length;i++) {
              flipCard(i);
@@ -395,35 +396,7 @@
         
         
       /*
-      function fetchJSONData() {
-
-            fetch("https://random-data-api.com/api/v2/users?response_type=json")
-
-                .then((res) => {
-
-                    if (!res.ok) {
-
-                        throw new Error
-
-                            (`HTTP error! Status: ${res.status}`);
-
-                    }
-
-                    return res.json();
-
-                })
-
-                .then((data) => 
-
-                      console.log(data.id))
-
-                .catch((error) => 
-
-                       console.error("Unable to fetch data:", error));
-
-        }
-
-        fetchJSONData();
+      
         */
   </script>
 </body>
